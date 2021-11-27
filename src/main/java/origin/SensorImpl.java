@@ -11,12 +11,12 @@ import java.util.List;
 public class SensorImpl implements Sensor {
     public List<Channel> channels;
     public AlgoDiffusion strategy;
-    private String name;
+    private final int id;
     private int value;
 
-    public SensorImpl(String name, AlgoDiffusion strategy) {
+    public SensorImpl(int id, AlgoDiffusion strategy) {
         this.channels = new ArrayList<>();
-        this.name = name;
+        this.id = id;
         this.value = 0;
         this.strategy = strategy;
         this.strategy.configure(this);
@@ -34,12 +34,12 @@ public class SensorImpl implements Sensor {
         return this.value;
     }
 
-    public String getName() {
-        return name;
+    public int getId() {
+        return id;
     }
 
     public void tick() {
-        System.out.println("\nSensor " + this.name + " tick");
+        System.out.println("\nSensor " + this.id + " tick");
         this.value++;
         strategy.execute();
     }

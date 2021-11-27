@@ -10,10 +10,10 @@ import java.util.concurrent.TimeUnit;
 
 public class ChannelImpl implements Channel {
 
-    private ScheduledExecutorService scheduledExecutorService;
-    private Sensor sensor;
-    private SensorObserver display;
-    private Random random;
+    public ScheduledExecutorService scheduledExecutorService;
+    public Sensor sensor;
+    public SensorObserver display;
+    final Random random;
 
     public ChannelImpl(ScheduledExecutorService scheduledExecutorService, Sensor sensor, SensorObserver display) {
         this.scheduledExecutorService = scheduledExecutorService;

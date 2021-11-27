@@ -6,11 +6,10 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
-// bloque le tick tant que tout les afficheurs n'ont pas les valueurs
+// Stratégie atomique : les afficheurs reçoivent toutes les valeurs du capteur
 public class AtomicDiffusion implements AlgoDiffusion {
 
     private SensorImpl capteur;
-    private String NAME = "AtomicDiffusion";
 
     @Override
     public void configure(SensorImpl capteur) {
@@ -19,11 +18,9 @@ public class AtomicDiffusion implements AlgoDiffusion {
 
     @Override
     public void execute() {
-        System.out.println("START " + NAME + " execute");
 
         ArrayList<Future<?>> futures = new ArrayList<>();
         for (Channel c : this.capteur.channels) {
-            System.out.println("Call .update()");
             futures.add(c.update());
         }
 
@@ -34,7 +31,5 @@ public class AtomicDiffusion implements AlgoDiffusion {
                 e.printStackTrace();
             }
         });
-
-        System.out.println("END " + NAME + " execute");
     }
 }

@@ -9,7 +9,7 @@ public interface Sensor {
 
     int getValue();
 
-    String getName();
+    int getId();
 
     void tick();
 }
