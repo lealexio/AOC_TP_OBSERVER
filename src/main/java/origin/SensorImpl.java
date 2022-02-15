@@ -2,9 +2,6 @@ package origin;
 
 import middle.Channel;
 import strategy.AlgoDiffusion;
-import strategy.AtomicDiffusion;
-import strategy.SequentialDiffusion;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +17,7 @@ public class SensorImpl implements Sensor {
         this.value = 0;
         this.strategy = strategy;
         this.strategy.configure(this);
+        System.out.println("The sensor is instantiated with the diffusion " + this.strategy.getClass().getName());
     }
 
     public void attach(Channel channel) {
