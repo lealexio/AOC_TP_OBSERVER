@@ -2,6 +2,7 @@ package origin;
 
 import middle.Channel;
 import strategy.AlgoDiffusion;
+
 import java.util.ArrayList;
 import java.util.List;
 

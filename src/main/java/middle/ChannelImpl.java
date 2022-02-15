@@ -29,4 +29,8 @@ public class ChannelImpl implements Channel {
     public Future<Integer> getValue() {
         return scheduledExecutorService.schedule(() -> this.sensor.getValue(), this.random.nextInt(1000) + 500, TimeUnit.MILLISECONDS);
     }
+
+    public SensorObserver getDisplay() {
+        return display;
+    }
 }

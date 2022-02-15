@@ -2,6 +2,7 @@ package strategy;
 
 import middle.Channel;
 import origin.SensorImpl;
+
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;

@@ -5,9 +5,6 @@ import middle.ChannelImpl;
 import origin.Sensor;
 import origin.SensorImpl;
 import strategy.AlgoDiffusion;
-import strategy.AtomicDiffusion;
-import strategy.EraDiffusion;
-import strategy.SequentialDiffusion;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -20,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 public class run {
     public static void main(String[] args) throws ClassNotFoundException, IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
 
-        Scanner scanner=new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
 
         // Add available diffusion to a list
         List<String> diffusions = new ArrayList<>();
@@ -32,9 +29,9 @@ public class run {
         System.out.println("Please select a diffusion method :");
         int selected = diffusions.size() + 1;
 
-        while(selected < 0 || selected >= diffusions.size()){
-            for(int i=0; i<diffusions.size(); i++){
-                System.out.println(i+" : "+diffusions.get(i));
+        while (selected < 0 || selected >= diffusions.size()) {
+            for (int i = 0; i < diffusions.size(); i++) {
+                System.out.println(i + " : " + diffusions.get(i));
             }
             selected = scanner.nextInt();
         }
@@ -56,7 +53,7 @@ public class run {
 
         threadPool.scheduleAtFixedRate(sensor1::tick, 0, 2, TimeUnit.SECONDS);
 
-    //ticker.cancel(true);
-    //scdheduler.awaitTermiantion
+        //ticker.cancel(true);
+        //scdheduler.awaitTermiantion
     }
 }
