@@ -23,4 +23,7 @@ public class Display implements SensorObserver {
         }
     }
 
+    public Integer getValue() {
+        return (Integer) value;
+    }
 }
