@@ -7,7 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import origin.Sensor;
 import origin.SensorImpl;
-import strategy.EraDiffusion;
+import strategy.AtomicDiffusion;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,12 +17,12 @@ import java.util.concurrent.ScheduledExecutorService;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class EraDiffusionTest {
+public class AtomicDiffusionTest {
 
     List<SensorObserver> displays;
     List<Channel> channels;
     Sensor sensor;
-    EraDiffusion eraDiffusion;
+    AtomicDiffusion atomicDiffusion;
     ScheduledExecutorService threadPool;
 
     // Nb loop for test
@@ -33,8 +33,8 @@ public class EraDiffusionTest {
     @BeforeEach
     void setUp() {
         threadPool = Executors.newScheduledThreadPool(8);
-        eraDiffusion = new EraDiffusion();
-        sensor = new SensorImpl(1, eraDiffusion);
+        atomicDiffusion = new AtomicDiffusion();
+        sensor = new SensorImpl(1, atomicDiffusion);
         displays = new ArrayList<>();
         channels = new ArrayList<>();
 
@@ -46,14 +46,12 @@ public class EraDiffusionTest {
     }
 
     @Test
-    @DisplayName("EraDiffusion")
-    void testEraDiffusion() throws InterruptedException {
+    @DisplayName("AtomicDiffusion")
+    void testAtomicDiffusion() {
         for (int i = 1; i <= N; i++) {
             sensor.tick();
             assertEquals(sensor.getValue(), i);
             for (SensorObserver display : displays) {
-                // 3000 is max delay for channel
-                Thread.sleep(3000);
                 assertEquals(display.getValue(), i);
             }
         }
