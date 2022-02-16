@@ -8,6 +8,10 @@ public class Display implements SensorObserver {
     private final int id;
     private int value;
 
+    /**
+     * Initialization of the display
+     * @param id is the id of the sensor
+     */
     public Display(int id) {
         this.id = id;
     }

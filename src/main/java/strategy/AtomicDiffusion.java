@@ -7,24 +7,27 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
-// Stratégie atomique : les afficheurs reçoivent toutes les valeurs du capteur
+/**
+ * Atomic strategy: the displays receive all the values from the sensor
+ */
 public class AtomicDiffusion implements AlgoDiffusion {
 
-    private SensorImpl capteur;
+    private SensorImpl sensor;
 
     @Override
-    public void configure(SensorImpl capteur) {
-        this.capteur = capteur;
+    public void configure(SensorImpl sensor) {
+        this.sensor = sensor;
     }
 
     @Override
     public void execute() {
-
+        // Update the displays
         ArrayList<Future<?>> futures = new ArrayList<>();
-        for (Channel c : this.capteur.channels) {
+        for (Channel c : this.sensor.channels) {
             futures.add(c.update());
         }
 
+        // Wait end of each future
         futures.forEach(i -> {
             try {
                 i.get();

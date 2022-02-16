@@ -6,21 +6,23 @@ import origin.SensorImpl;
 import java.util.ArrayList;
 import java.util.concurrent.Future;
 
-// Stratégie époque : les afficheurs peuvent recevoir des sous ensembles de valeurs du capteur différents, mais il faut que ces sous-ensembles soient croissant
+/**
+ * Epochal strategy: the displays can receive different subsets of sensor values, but these subsets must be increasing
+ */
 public class EraDiffusion implements AlgoDiffusion {
 
-    private SensorImpl capteur;
+    private SensorImpl sensor;
 
     @Override
-    public void configure(SensorImpl capteur) {
-        this.capteur = capteur;
+    public void configure(SensorImpl sensor) {
+        this.sensor = sensor;
     }
 
     @Override
     public void execute() {
-
+        // Update the displays
         ArrayList<Future<?>> futures = new ArrayList<>();
-        for (Channel c : this.capteur.channels) {
+        for (Channel c : this.sensor.channels) {
             futures.add(c.update());
         }
 
