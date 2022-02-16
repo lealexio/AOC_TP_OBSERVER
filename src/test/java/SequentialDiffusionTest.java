@@ -48,11 +48,13 @@ public class SequentialDiffusionTest {
     @Test
     @DisplayName("SequentialDiffusionTick")
     void testSequentialDiffusion() {
+        int best_value;
         for (int i = 1; i <= N; i++) {
             sensor.tick();
+            best_value = sensor.getValue();
             assertEquals(sensor.getValue(), i);
             for (SensorObserver display : displays) {
-                assertEquals(display.getValue(), sensor.getValue());
+                assertEquals(display.getValue(), best_value);
             }
         }
     }
