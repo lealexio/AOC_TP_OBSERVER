@@ -36,7 +36,7 @@ The javadoc contains the generated javadoc.
 
 ## Class diagram
 
-![Class Diagram](documentation/assets/class_diagram.png)
+![Class Diagram](documentation/assets/diagram_class.svg)
 
 ## Sequence diagram
 
