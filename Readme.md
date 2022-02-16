@@ -52,7 +52,7 @@ The javadoc contains the generated javadoc.
 
 ## System description
 
-## Era Diffusion
+### Era Diffusion
 ```java
 public void execute() {
     // Update the displays
@@ -63,7 +63,7 @@ public void execute() {
 ```
 The action of era diffusion is simple, this diffusion is not blocking and just update the display.
 
-## Atomic Diffusion
+### Atomic Diffusion
 ```java
 public void execute() {
         // Update the displays
@@ -85,7 +85,7 @@ public void execute() {
 
 Atomic diffusion works like Era diffusion, however after calling the update() method for all channels, a second loop lock and waits for the reception of the new sensor value by all displays.
 
-## Sequential Diffusion
+### Sequential Diffusion
 ```java
 public void execute() {
     Map<Future<?>, Channel> futures = new HashMap<>();
@@ -131,3 +131,64 @@ When a future is finished, if the value of the last display is greater than the 
 A JUnit test is available for each broadcast
 For each test, it is possible to modify N which represents the amount of repetition for test loop.
 
+All tests are validated.
+
+### Era Diffusion
+```java
+@Test
+@DisplayName("EraDiffusion")
+void testEraDiffusion() throws InterruptedException {
+    for (int i = 1; i <= N; i++) {
+        sensor.tick();
+        assertEquals(sensor.getValue(), i);
+        for (SensorObserver display : displays) {
+            // 3000 is max delay for channel
+            Thread.sleep(3000);
+            assertEquals(display.getValue(), i);
+        }
+    }
+}
+```
+
+This test consists in verifying that the sensor value increments for N tick
+
+Then a delay of 3000ms (equivalent to the maximum delay of the data transfer in the channel) allows to check the new display value.
+
+### Atomic Diffusion
+
+```java
+void testAtomicDiffusion() {
+    for (int i = 1; i <= N; i++) {
+        sensor.tick();
+        assertEquals(sensor.getValue(), i);
+        for (SensorObserver display : displays) {
+            assertEquals(display.getValue(), i);
+        }
+    }
+}
+```
+
+This test consists in verifying that the sensor value increments for N tick.
+
+Then we check directly that each display has received the value of the sensor.
+
+
+### Sequential Diffusion
+
+```java
+void testSequentialDiffusion() {
+    int best_value;
+    for (int i = 1; i <= N; i++) {
+        sensor.tick();
+        best_value = sensor.getValue();
+        assertEquals(sensor.getValue(), i);
+        for (SensorObserver display : displays) {
+            assertEquals(display.getValue(), best_value);
+        }
+    }
+}
+```
+
+This test consists in verifying that the sensor value increments for N tick
+
+Then we check that for each display, the value is equal to the latest value received.
