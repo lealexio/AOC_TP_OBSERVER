@@ -1,6 +1,12 @@
 A faire :
 Diagramme de classe
-diagrammes de sequences (1 par strat)
-explication des tests unitaires
-code
-executable
+
+Diagrammes de sequences (1 par strat)
+
+Explication des tests unitaires
+
+Code
+
+Executable
+
+JavaDoc
