@@ -19,34 +19,74 @@ The architecture will therefore include:
 
 ![Intro](documentation/assets/intro.png)
 
-## Documentation folder
+## Documentation
+
+### Documentation folder
 
 The documentation folder contains subfolders each having documentation :
 
-### Assets
+#### Assets
 The assets folder contains the different diagrams such as the class diagram or the sequence diagram.
 
-### Executable
+#### Executable
 The executable folder contains an executable of the application as well as .bat and .sh scripts to execute it.
 
-### Javadoc
+#### Javadoc
 The javadoc contains the generated javadoc.
 
 
-
-## Class diagram
+### Class diagram
 
 ![Class Diagram](documentation/assets/diagram_class.svg)
 
-## Sequence diagram
+### Sequence diagrams
 
-### Era Diffusion
-![Era Diffusion Sequence Diagram](documentation/assets/era_sequence_diagram.png)
+#### Era Diffusion
+![Era Diffusion Sequence Diagram](documentation/assets/era_sequence_diagram.svg)
 
 ### Atomic Diffusion
-![Atomic Diffusion Sequence Diagram](documentation/assets/atomic_sequence_diagram.png)
+![Atomic Diffusion Sequence Diagram](documentation/assets/atomic_sequence_diagram.svg)
 
-### Sequential Diffusion
-![Sequential Diffusion Sequence Diagram](documentation/assets/sequential_sequence_diagram.png)
+#### Sequential Diffusion
+![Sequential Diffusion Sequence Diagram](documentation/assets/sequential_sequence_diagram.svg)
 
-## 
+## System description
+
+## Era Diffusion
+```java
+public void execute() {
+    // Update the displays
+    for (Channel c : this.sensor.channels) {
+    c.update();
+    }
+}
+```
+The action of era diffusion is simple, this diffusion is not blocking and just update the display.
+
+## Atomic Diffusion
+```java
+public void execute() {
+        // Update the displays
+        ArrayList<Future<?>> futures = new ArrayList<>();
+        for (Channel c : this.sensor.channels) {
+            futures.add(c.update());
+        }
+
+        // Wait end of each future
+        futures.forEach(i -> {
+            try {
+                i.get();
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+```
+
+
+## Sequential Diffusion
+```java
+
+```
+## Tests
+

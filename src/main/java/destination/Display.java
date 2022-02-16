@@ -21,8 +21,8 @@ public class Display implements SensorObserver {
             int tmp_value = c.getValue().get();
             if (tmp_value > this.value) {
                 this.value = tmp_value;
-                System.out.println("Display " + this.id + " show value : " + this.value);
             }
+            System.out.println("Display " + this.id + " show value : " + this.value);
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }

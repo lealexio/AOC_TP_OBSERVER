@@ -21,10 +21,8 @@ public class EraDiffusion implements AlgoDiffusion {
     @Override
     public void execute() {
         // Update the displays
-        ArrayList<Future<?>> futures = new ArrayList<>();
         for (Channel c : this.sensor.channels) {
-            futures.add(c.update());
+            c.update();
         }
-
     }
 }
