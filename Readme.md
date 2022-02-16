@@ -83,10 +83,51 @@ public void execute() {
     }
 ```
 
+Atomic diffusion works like Era diffusion, however after calling the update() method for all channels, a second loop lock and waits for the reception of the new sensor value by all displays.
 
 ## Sequential Diffusion
 ```java
+public void execute() {
+    Map<Future<?>, Channel> futures = new HashMap<>();
 
+    // List of future from update method
+    for (Channel c : this.sensor.channels) {
+        futures.put(c.update(), c);
+    }
+
+    // Nb ended futures
+    int ended = 0;
+    // Loop to get futures, when all futures are received loop is break
+    while (ended < futures.size()) {
+        ended = 0;
+        for (Map.Entry<Future<?>, Channel> entry : futures.entrySet()) {
+            Future<?> f = entry.getKey();
+            Channel c = entry.getValue();
+            // When a future is done
+            if (f.isDone()) {
+                // Get value of display on done future
+                int best_value = c.getDisplay().getValue();
+                // For every display, if current best value is > than current
+                // Set new display value as current best_value
+                for (Channel tmp_c : futures.values()) {
+                    if (best_value > tmp_c.getDisplay().getValue()) {
+                        tmp_c.getDisplay().setValue(best_value);
+                    }
+                }
+                // Increment ended futures
+                ended++;
+            }
+        }
+    }
+}
 ```
+
+The sequential distribution is more complex.
+
+After calling the update method on all channels, a non-blocking while loop waits for the end of all futures.
+When a future is finished, if the value of the last display is greater than the last received value, the value of all displays is updated with the new value.
+
 ## Tests
+A JUnit test is available for each broadcast
+For each test, it is possible to modify N which represents the amount of repetition for test loop.
 
