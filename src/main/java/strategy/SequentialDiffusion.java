@@ -31,6 +31,7 @@ public class SequentialDiffusion implements AlgoDiffusion {
         // Nb ended futures
         int ended = 0;
         // Loop to get futures, when all futures are received loop is break
+        int best_value = 0;
         while (ended < futures.size()) {
             ended = 0;
             for (Map.Entry<Future<?>, Channel> entry : futures.entrySet()) {
@@ -39,14 +40,18 @@ public class SequentialDiffusion implements AlgoDiffusion {
                 // When a future is done
                 if (f.isDone()) {
                     // Get value of display on done future
-                    int best_value = c.getDisplay().getValue();
-                    // For every display, if current best value is > than current
-                    // Set new display value as current best_value
-                    for (Channel tmp_c : futures.values()) {
-                        if (best_value > tmp_c.getDisplay().getValue()) {
-                            tmp_c.getDisplay().setValue(best_value);
+                    if (c.getDisplay().getValue() > best_value){
+                        best_value = c.getDisplay().getValue();
+
+                        // For every display, if current best value is > than current
+                        // Set new display value as current best_value
+                        for (Channel tmp_c : futures.values()) {
+                            if (best_value > tmp_c.getDisplay().getValue()) {
+                                tmp_c.getDisplay().setValue(best_value);
+                            }
                         }
                     }
+
                     // Increment ended futures
                     ended++;
                 }
