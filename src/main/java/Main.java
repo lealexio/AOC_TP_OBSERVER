@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit;
  * @author Alexis Leloup
  * @author Simon Lecordier
  */
-public class run {
+public class Main {
     public static void main(String[] args) throws ClassNotFoundException, IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
 
         Scanner scanner = new Scanner(System.in);
