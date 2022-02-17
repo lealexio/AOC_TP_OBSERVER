@@ -192,3 +192,4 @@ void testSequentialDiffusion() {
 This test consists in verifying that the sensor value increments for N tick
 
 Then we check that for each display, the value is equal to the latest value received.
+
